@@ -41,33 +41,54 @@ end
 # Write a function that takes two strings.
 # Return the longest common substring.
 def common_substrings(string_one, string_two)
-
+    longest_str = ""
+    strs = string_one.length < string_two.length ? [string_one, string_two] : [string_two, string_one]
+    (1..strs[0].length).each do |cur_size|
+       strs[0].split("").each_index do |index|
+        break if index + cur_size >= strs[0].length 
+        cur_str = strs[0][index...index+cur_size]
+        longest_str = strs[1].include?(cur_str) ? cur_str : longest_str
+       end
+    end
+    longest_str
 end
 
 # Write a function that takes an array of integers and returns their sum.
 # Use recursion.
 def sum_rec(numbers)
-
+    # base case
+    return 0 if numbers.empty?
+    # inductive step
+    numbers[0] + sum_rec(numbers[1..-1])
 end
 
 # Write a function that takes n, the length of the sequence.
 # Return the first n elements from the fibonnacci sequence as an array.
 def fibs(n)
-
+    #base case
+    return [0] if n == 1
+    return [0, 1] if n == 2
+    #inductive step
+    cur_arr = fibs(n-1)
+    cur_arr.push(cur_arr[-2] + cur_arr[-1])
 end
 
 # Write a function that takes a string.
 # Return true if the string is a palindrome, otherwise return false.
 # It should take less time and memory than reversing the string.
 def is_palindrome?(string)
-
+    string.reverse == string
 end
 
 # Write a method that takes a string as input.
 # It should return true if the input is a valid IPv4 address.
 # Valid IPs are anything between '0.0.0.0' and '255.255.255.255'.
 def valid_ip?(string)
-
+    string.split(".").each do |num_str|
+        num = num_str.to_i
+        return false if num < 0 || num > 255
+    end
+    true
 end
 
 # Implement the Folding Cipher.
