@@ -1,3 +1,4 @@
+require 'set'
 # Write a method that will sum the digits of a positive integer.
 # If it is greater than or equal to 10, sum the digits of the resulting number.
 # Keep repeating until there is only one digit in the result.
@@ -95,12 +96,29 @@ end
 # It folds the alphabet in half and uses the adjacent letter.
 # a -> z, b -> y, c -> x, m -> n, etc...
 def folding_cipher(string)
+    alpha = ('a'..'z').to_a
+    reverse = alpha.reverse
 
+    string.split('').map do |ch|
+        idx = alpha.index(ch)
+        reverse[idx]
+    end.join('')  
 end
 
 # Write a method that finds all the unique substrings for a word.
 def uniq_subs(string)
-
+    # initialize Set
+    set = Set.new
+    # Get substrings
+    cur_len = 0
+    while cur_len < string.length
+        string.each_char.with_index do |ch, i|
+            break if i + cur_len > string.length
+            set.add(string[i..i+cur_len])
+        end
+        cur_len += 1
+    end
+    set.to_a
 end
 
 # Given an array of integers find the largest contiguous subsum.
@@ -114,7 +132,7 @@ end
 # Returns an array of the 10 closest subsequent silly years.
 # A silly year's first two digits plus the last two digits equal the middle two.
 def silly_years(year)
-
+    
 end
 
 # Take an array of integers, and integer k.
