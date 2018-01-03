@@ -125,21 +125,44 @@ end
 # You can solve this trivially in O(n**2) time by considering all subarrays.
 # Try to solve it in O(n) time with O(1) memory.
 def lcs(array)
-    cur_sum = 0
-    result = array[0]
+    current_sum = 0
+    largest_subsum = array[0]
+    
     array.each do |num|
         cur_sum += num
-        result = cur_sum if cur_sum > result
+        largest_subsum = cur_sum if cur_sum > largest_subsum
         cur_sum = 0 if cur_sum < 0
     end
-    result
+
+    largest_subsum
 end
 
 # Write a function that takes a year as a four digit integer.
 # Returns an array of the 10 closest subsequent silly years.
 # A silly year's first two digits plus the last two digits equal the middle two.
 def silly_years(year)
-    
+    result_arr = []
+    # retrieves first two digits
+    first_half = year.to_s.split('')[0..1].join('').to_i
+    while result_arr.length < 10
+        first_half += 1
+        mid = first_half%10
+        next if mid*10 - first_half < 0
+        
+        mid = mid*10 + (((mid*10) - first_half)/10)
+        second_half = mid - first_half
+        year = first_half.to_s
+        if second_half.to_s.length == 1
+            year += "0" + second_half.to_s
+        else
+            year += second_half.to_s
+        end
+        
+        
+        result_arr << year.to_i
+    end
+
+    result_arr
 end
 
 # Take an array of integers, and integer k.
