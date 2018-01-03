@@ -125,7 +125,14 @@ end
 # You can solve this trivially in O(n**2) time by considering all subarrays.
 # Try to solve it in O(n) time with O(1) memory.
 def lcs(array)
-
+    cur_sum = 0
+    result = array[0]
+    array.each do |num|
+        cur_sum += num
+        result = cur_sum if cur_sum > result
+        cur_sum = 0 if cur_sum < 0
+    end
+    result
 end
 
 # Write a function that takes a year as a four digit integer.

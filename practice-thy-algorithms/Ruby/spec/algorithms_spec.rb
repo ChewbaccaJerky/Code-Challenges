@@ -62,6 +62,7 @@ end
 describe 'lcs' do
   specify { expect(lcs([4, -1, 5, 6, -13, 2])).to eq(14) }
   specify { expect(lcs([-2, 1, -3, 4, -1, 2, 1, -5, 4])).to eq(6) }
+  specify { expect(lcs([-5, -1, -2, -4, -2, -3])).to eq(-1)}
 end
 
 describe 'silly_years' do
