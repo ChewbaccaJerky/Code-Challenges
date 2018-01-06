@@ -210,11 +210,32 @@ end
 # Implement Merge Sort
 # Hint: This typically involves a helper function.
 def merge_sort(array)
+    return array if array.length <= 1
+    mid = array.length/2
 
+    left = merge_sort(array[0...mid])
+    right = merge_sort(array[mid..-1])
+
+    merge(left, right)
 end
 
 def merge(left, right)
+    return right if left.empty?
+    return left if right.empty?
+    result = []
 
+    while left.length > 0 && right.length > 0
+        # result += left.first <= right.first ? [left.shift] : [right.shift]
+        if left.first <= right.first
+            result << left.shift
+        else
+            result << right.shift
+        end
+    end
+
+    result += left.empty? ? right : left
+
+    result
 end
 
 # Implement binary search.
