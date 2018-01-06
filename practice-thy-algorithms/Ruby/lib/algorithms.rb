@@ -171,7 +171,18 @@ end
 # Time complexity: O(n).
 # Return a set.
 def pair_sum(array, k)
+    result = Set.new
+    hash_num = Hash.new
 
+    array.each{|n| hash_num[n] = k - n}
+
+    array.each do |n|
+        unless hash_num[hash_num[n]].nil?
+            result.add([hash_num[n], n].sort)
+        end
+    end
+
+    result
 end
 
 # Take a matrix of integers and coordinates.
