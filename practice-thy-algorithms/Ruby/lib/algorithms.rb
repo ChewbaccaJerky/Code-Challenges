@@ -262,27 +262,22 @@ def productify(array)
     left = Array.new(len){1}
     right = Array.new(len){1}
 
-    # step 1 create left array O(n)
+    # step 1 create left array and right array O(n)
     array.each_index do |i|
         next if i == 0
         left[i] = left[i - 1] * array[i - 1]
-    end
-    
-    # step 2 create right array O(n)
-    array.each_index do |i|
-        next if i == 0
-        right[len - i - 1] = array[len - i] * right[len - i]
+        right[len - i - 1] = right[len - 1] * array[len - i]
     end
 
-    # step 3 multiply products O(n)
+    # step 2 multiply products O(n)
     array.each_index do |i|
         array[i] = left[i] * right[i]
     end
 
-    # step 4 return results
+    # step 3 return results
     array
 
-    # time complexity O(n + n + n) => O(n)
+    # time complexity O(n + n) => O(n)
 end
 
 # Write a function that takes an array and returns all of its subsets.
