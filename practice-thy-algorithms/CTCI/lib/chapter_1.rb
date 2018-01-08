@@ -5,6 +5,7 @@
 # A palindrome is a word or phrase that is the same forwards and backwards.
 # A permutation is a rearrangement of letters. 
 # The palindrome does not need to be limited to just dictionary words.
+
 def palindrome_permutation?(string)
     # return false if string is empty
     return false if string == ""
@@ -30,5 +31,45 @@ def palindrome_permutation?(string)
     else
         false
     end
+end
+
+# 1.5 One Away: There are three types of edits that can be performed on strings: insert a character,
+# remove a chataracter, or replace a character. Given two strings, 
+# write a function to check if they are one edit(or zero edits) away
+
+# case 0 string is not edited
+# "hello"
+# "hello"
+
+# case 1 character changed
+# "hello"
+# "hallo"
+
+# case 2 character removed
+# "hello"
+# "hllo"
+
+def one_away?(str, edit_str)
+    # case 0: no edit
+    return true if str == edit_str
+    len = str.length
+    edit_counter = 0
     
+    # case 1: character changed
+    if len == edit_str.length
+        len.times do |i|
+            if str[i] != edit_str[i]
+                edit_counter += 1
+            end
+        end
+    # case 2: character removed 
+    else
+        str.each_char do |ch|
+            unless str.include?(ch)
+                edit_counter += 1
+            end
+        end
+    end
+
+    edit_counter > 1 ? false : true
 end
