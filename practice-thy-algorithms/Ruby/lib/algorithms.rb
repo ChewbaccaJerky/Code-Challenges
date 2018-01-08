@@ -258,7 +258,9 @@ end
 # Replace all the numbers with the product of all other numbers.
 # Do this in O(n) time without using division.
 def productify(array)
-
+    product = array.reduce(:*)
+    puts product
+    array.map {|n| product / n}
 end
 
 # Write a function that takes an array and returns all of its subsets.
