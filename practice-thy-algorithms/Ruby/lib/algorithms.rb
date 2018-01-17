@@ -282,6 +282,16 @@ end
 
 # Write a function that takes an array and returns all of its subsets.
 def subsets(array)
+    return [[]] if array.empty?
+
+    val = array[0]
+    subs = subsets(array.drop(1))
+    new_subs = subs.map { |sub| sub + [val] }
+
+    subs + new_subs
+end
+
+def _subset(array, n)
 
 end
 
