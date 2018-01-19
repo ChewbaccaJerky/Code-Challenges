@@ -297,13 +297,24 @@ end
 def longest_palindrome(string)
     longest = ""
     len = 2
+    
+    while len < string.length
+        i = 0
+        while i+len <= string.length
+            if is_palindrome?(string[i...i+len])
+                longest = [i, i+len-1]
+            end
+            i += 1
+        end
+        len += 1
+    end
 
-
+    longest
 end
 
 def is_palindrome?(string)
-    string.split('').each_index do |idx|
-        return false if string[idx] == string[string.length - 1 - idx]
+    string.split("").each_index do |i|
+        return false if string[i] != string[string.length - 1 - i]
     end
     true
 end
