@@ -324,7 +324,20 @@ end
 # Use sorting to solve in O(nlog(n)).
 # Next, improve this to O(n) time (maybe use a non-array datastructure).
 def fast_intersection(array_one, array_two)
+    result = []
+    hash = {};
+    
+    array_one.each do |num1|
+        hash[num1] = true
+    end
 
+    array_two.each do |num2|
+        if hash[num2]
+            result << num2
+        end
+    end
+
+    result
 end
 
 # Write a function that takes two arrays of integers
