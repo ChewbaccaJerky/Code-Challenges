@@ -352,9 +352,22 @@ end
 # You are given an array and index.
 # Find if it's possible to reach 0 by starting at the index.
 # You can only move left or right by the distance found at array[index].
-def can_win?(array, index)
 
+def can_win?(array, index)
+    return true if array[index] == 0
+    val = array[index]
+    
+    # check left position
+    if index - val >= 0
+        can_win?(array, index - val);
+    end
+    
+    # check right position
+    if index + val <= array.length - 1
+        can_win?(array, index + val);
+    end  
 end
+
 
 # Assume an array of length n, containing the numbers 1..n in jumbled order.
 # "Sort" this array in O(n) time.
