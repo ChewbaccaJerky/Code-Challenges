@@ -291,15 +291,21 @@ def subsets(array)
     subs + new_subs
 end
 
-def _subset(array, n)
-
-end
-
 # Return the indices of the start/end of the longest palindrome in the string.
 # You could reverse the string and compare it to the original, but that is slow.
 # Instead, you should be able to solve the problem with O(1) memory.
 def longest_palindrome(string)
+    longest = ""
+    len = 2
 
+
+end
+
+def is_palindrome?(string)
+    string.split('').each_index do |idx|
+        return false if string[idx] == string[string.length - 1 - idx]
+    end
+    true
 end
 
 # Given two arrays, find the intersection of both sets.
