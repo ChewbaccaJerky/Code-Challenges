@@ -326,7 +326,7 @@ end
 def fast_intersection(array_one, array_two)
     result = []
     hash = {};
-    
+
     array_one.each do |num1|
         hash[num1] = true
     end
@@ -345,7 +345,8 @@ end
 # Don't generate all subsets of both arrays, which would be exponential time.
 # Instead, directly generate the subsets of both.
 def common_subsets(array_one, array_two)
-
+    common_array = fast_intersection(array_one, array_two)
+    subsets(common_array)
 end
 
 # You are given an array and index.
