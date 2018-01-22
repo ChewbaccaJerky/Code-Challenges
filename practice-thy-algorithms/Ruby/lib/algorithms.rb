@@ -398,7 +398,28 @@ end
 # Hint: Do not compare any two strings.
 # All strings contain only lowercase letters without whitespace or punctuation.
 def sort3(array, length)
+    # O(k)
+    length.times do |i|
+        hash = {}
+        
+        # O(n)
+        array.each do |str|
+            if hash[str[i]].nil?
+                hash[str[i]] = [str]
+            else
+                hash[str[i]] += [str]
+            end
+        end
 
+        array = []
+        # O(n)
+        hash.values.each do |val|
+            array += val 
+        end
+    end
+
+    # overall time complexity O(kn)
+    array
 end
 
 # Given an array, write a function that will return a random index of the array.
