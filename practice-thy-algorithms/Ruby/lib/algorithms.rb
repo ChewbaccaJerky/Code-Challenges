@@ -361,7 +361,7 @@ def can_win?(array, index)
     if index - val >= 0
         can_win?(array, index - val);
     end
-    
+
     # check right position
     if index + val <= array.length - 1
         can_win?(array, index + val);
@@ -373,14 +373,23 @@ end
 # "Sort" this array in O(n) time.
 # Hint: You should be able to do this without looking at the input.
 def sort1(array)
-
+    (1..arr.length).to_a
 end
 
 # Assume an array of length n with numbers in the range 1..N (N >= n).
 # Sort this array in O(n + N) time.
 # You may use O(N) memory.
 def sort2(array, max_value)
+    counts = Array.new(max_value + 1, 0)
+    array.each { |el| counts[el] += 1 }
 
+    array = []
+    counts.each.with_index do |num, i|
+        next if num == 0
+        array << i
+    end
+
+    array
 end
 
 # Say I give you an array of n strings, each of length k.
