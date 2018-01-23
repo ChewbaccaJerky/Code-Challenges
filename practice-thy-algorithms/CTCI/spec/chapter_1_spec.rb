@@ -19,3 +19,42 @@ describe 'string_compression' do
     specify { expect(string_compression("daawwwwggg")).to eq("d1a2w4g3")}
     specify { expect(string_compression("")).to eq("")}
 end
+
+describe 'zero_matrix' do
+    matrix1 = [
+        [1, 0, 1, 3],
+        [0, 1, 4, 2],
+        [1, 1, 1, 1],
+        [2, 3, 2, 1],
+        [1, 1, 1, 1]
+    ]
+
+    matrix2 = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 1, 1],
+        [0, 0, 2, 1],
+        [0, 0, 1, 1]
+    ]
+
+    matrix3 = [
+        [1, 1, 1, 3],
+        [1, 1, 4, 1],
+        [1, 1, 1, 1],
+        [2, 3, 2, 1]
+    ]
+
+    specify { expect(zero_matrix(matrix1)).to eq(matrix2) }
+    specify { expect(zero_matrix(matrix3)).to eq(matrix3) }
+end
+
+describe 'string_rotation' do 
+    str1 = "aabbcc"
+    str2 = "ccaabb"
+    str3 = "bbccaa"
+
+    specify { expect(string_rotation(str1, str2)).to eq(true)}
+    specify { expect(string_rotation(str1, str3)).to eq(true)}
+    specify { expect(string_rotation(str1, str1)).to eq(true)}
+    specify { expect(string_rotation(str1, "aaccbb")).to eq(false)}
+end

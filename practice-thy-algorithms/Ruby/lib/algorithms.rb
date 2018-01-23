@@ -400,6 +400,7 @@ end
 def sort3(array, length)
     # O(k)
     length.times do |i|
+        # clear hash
         hash = {}
         
         # O(n)
@@ -426,7 +427,7 @@ end
 # The chance of returning a given index will vary with the value of the element.
 # Probability of i should be the ith element divided by the sum of all elements.
 def weighted_random_index(array)
-
+    
 end
 
 # Given an array, move all zeros to the end.

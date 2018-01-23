@@ -102,3 +102,56 @@ def string_compression(str)
     result = counter != 0 ? result + cur_char + counter.to_s : ""
 end
 
+# 1.8 Zero Matrix
+# Write an algorithm such that if an element in an MxN matrix is 0, 
+# its entire row and column are set to 0.
+# Time Complexity O(n)
+
+def zero_matrix(matrix)
+    coords = []
+    # step 1 find all 0 coordinates
+    matrix.each_index do |row|
+        matrix[row].each_index do |col|
+            coords << [row, col] if matrix[row][col] == 0
+        end
+    end
+
+    # step 2 change all rows and columns adjacent from coordinates to 0
+    coords.each do |coord|
+        # 2a. change row to zeros
+        matrix.length.times do |i|
+            matrix[i][coord[1]] = 0
+        end
+
+        # 2b. change column to zeros
+        matrix[0].length.times do |j|
+            matrix[coord[1]][j] = 0
+        end
+    end
+
+    matrix
+end
+
+# 1.9 StringRotation
+# Assume you have a method isSubstring which checks if one word is a substring
+# of another. Given two strins, s1 and s2, write code to check if s2 is a rotation of s1
+# using only one call to isSubstring.
+# Time Complexity
+
+def string_rotation(str1, str2)
+    return true if str1 == str2
+    len = str1.length
+    i = 0
+    j = 0
+
+    while i < len && j < len
+        if str1[i] != str2[j]
+            i += 1
+        else
+            i += 1
+            j += 1
+        end
+    end
+
+    str1 == str2[j..-1] + str2[0...j]
+end
