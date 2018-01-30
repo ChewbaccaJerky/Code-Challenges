@@ -1,4 +1,17 @@
+require "byebug"
+
+class Node 
+    attr_accessor :next, :value
+    
+    def initialize(value)
+        @value = value
+        @next = nil
+    end
+end
+
 class LinkedList
+    attr_accessor :head, :length
+
     def initialize
         @head = nil
         @length = 0
@@ -6,36 +19,31 @@ class LinkedList
 
     def add(value)
         new_node = Node.new(value)
-        #increment length
-        @length += 1
 
-        # case 1
-        if head.nil?
+        if @head.nil?
             @head = new_node
         else
-        # case 2
-            q = head
+            q = @head.dup
             until q.next.nil?
-                q.next = new_node
+                q = q.next
             end
+
+            q.next = new_node
         end
+        
+        @length += 1
     end
-    
+
+
     def print
-        q = head
-
+        q = @head.dup
+        debugger
         until q.next.nil?
-            print q.value + " -> "
+            print "#{q.value} -> "
+            q = q.next
         end
 
-        print "nil"
+        print " nil "
     end
-end
 
-class Node 
-    attr_accessor :next, :value
-    def initialize(value)
-        @value = value
-        @next = nil
-    end
 end
