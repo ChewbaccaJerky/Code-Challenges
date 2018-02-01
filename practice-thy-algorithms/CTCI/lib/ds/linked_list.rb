@@ -34,16 +34,4 @@ class LinkedList
         @length += 1
     end
 
-
-    def print
-        q = @head.dup
-        debugger
-        until q.next.nil?
-            print "#{q.value} -> "
-            q = q.next
-        end
-
-        print " nil "
-    end
-
 end
