@@ -427,29 +427,82 @@ end
 # The chance of returning a given index will vary with the value of the element.
 # Probability of i should be the ith element divided by the sum of all elements.
 def weighted_random_index(array)
-    
+    idx = rand(array.length)
 end
 
 # Given an array, move all zeros to the end.
 # The order of non-zero elements does not matter.
 # Try to accomplish this in O(n) time and O(1) space.
 def move_zeros(array)
+    zero_count = 0
+    # O(n)
+    array.each do |num|
 
+        zero_count += 1 if num == 0
+    end
+
+    # O(n)
+    array = array.select { |num| num != 0 }
+    
+    # O(1)
+    zero_count.times do
+        array += [0]
+    end
+
+    array
 end
 
 # Implement the 'look and say' function.
 #'Look and say' takes an input array and outputs an array.
 # The output describes the count of the elements in the input.
-
+#11222123 => [2,1], [3,2], [1,1], [1,2], [1,3]
 def look_and_say(array)
+    # Step 0: intialize variables
+    result = []
+    count = 1
+    cur_num = array.first
+    
+    # Step 1: iterate array
+    array.each.with_index do |num, idx|
+        # Step 2: next if num is the first item in array
+        next if idx == 0
+        # Step 2a: Check if num is the same value as the previous element in array
+        if num != cur_num
+            result << [count, cur_num]
+            cur_num = num
+        # Step 2b: If cur_num and num are equivalent increment count
+        else
+            count += 1
+        end
+    end
 
+    # Step 3: Push the last [count, num] into the result array
+    result << [count, cur_num]
+
+    result
 end
 
 # I give you a scrambled list of n unique integers between 0 and n.
 # Tell me what number is missing?
 # How could you solve the problem in O(n), and also O(1) space?
 def sum_upon_sums(array)
+    # [1, 5, 3, 2, 0] => 4
 
+    # Step 0: initialize variables
+    max = -1
+    sum = 0
+    
+    # Step 1: Get Max and Sum
+    array.each do |num|
+        max = num if num >= max
+        sum += num
+    end
+
+    # Step 2: Get summation
+    summation = max * (max + 1) / 2
+
+    # Step 3: Missing value by subtracting summation and sum
+    summation - sum
 end
 
 # Implement a stack with a max method that returns the maximum value.

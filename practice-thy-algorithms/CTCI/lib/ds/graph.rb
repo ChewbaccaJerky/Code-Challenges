@@ -42,8 +42,11 @@ class Graph
             if undirected
                 self._add_edge(vertex1, edge)
                 self._add_edge(vertex2, edge)
+                self._add_neighbors(vertex1, vertex2)
+                self._add_neighbors(vertex2, vertex1)
             else
                 self._add_edge(vertex1, edge)
+                self._add_neighbors(vertex1, vertex2)
             end
             nil
         else
@@ -75,5 +78,9 @@ class Graph
         else
             @edge[vertex] << edge
         end
+    end
+
+    def _add_neighbors(start_vert, end_vert)
+        @vetices[start_vert.value].neighbors << end_vert
     end
 end
