@@ -576,7 +576,39 @@ end
 # Write a MinMaxStackQueue which tracks both the min and max.
 # Last, use MinMaxStackQueue to solve the problem.
 class MinMaxStack
+    attr_reader :min, :max, :length
+    def initialize
+        @stack = []
+        @min = nil
+        @max = nil
+        @length = 0
+    end
 
+    def push(val)
+        @stack << val
+        set_min_or_max!(val)
+        @length += 1
+    end
+
+    def pop
+        val = @stack[-1]
+        @stack = @stack[0...-1]
+        set_min_or_max!(val)
+        val
+    end
+
+    private
+
+    def set_min_or_max(val)
+        # when pushed
+        if @stack.include?(val)
+            @min = val if val < @min || !min
+            @max = val if val > @max || !max
+        else
+            @min = @stack.min if @min = val
+            @max = @stack.max if @max = val
+        end
+    end
 end
 
 class MinMaxStackQueue
