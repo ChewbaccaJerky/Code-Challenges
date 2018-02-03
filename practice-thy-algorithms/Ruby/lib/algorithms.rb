@@ -506,7 +506,7 @@ end
 # Implement a stack with a max method that returns the maximum value.
 # It should run in O(1) time.
 class MaxStack
-    attr_reader :max
+    attr_reader :max, :count, :stack
     def initialize
         @stack = []
         @max = nil
@@ -520,10 +520,10 @@ class MaxStack
     end
 
     def pop
-        val = @stack[-1]
-        @stack = @stack.take(@count)
+        val = @stack.last
+        @stack = @stack[0...-1]
         @count -= 1
-        set_new_max! if @count == 0
+        set_new_max! if @count == 0 || (val == @max)
         val
     end
 
@@ -532,11 +532,8 @@ class MaxStack
     def set_new_max!
         @max = @count == 0 ? nil : @stack.max
     end
-
-    def here
-        print "here"
-    end
 end
+
 
 # Implement a queue using stacks.
 # That is, write enqueue and dequeue using only push and pop operations.
@@ -545,7 +542,30 @@ end
 # In terms of ammortized time, dequeue should be O(1).
 # Prove that your solution accomplishes this.
 class StackQueue
+    
+    def initialize
+        @push_stack = MaxStack.new
+        @pop_stack = MaxStack.new
+    end
 
+    def enqueue(val)
+        @push_stack.push(val)
+    end
+
+    def dequeue
+        refill_pop_stack! if @pop_stack.count == 0
+        val = @pop_stack.pop
+    end
+
+    private
+
+    def refill_pop_stack!
+        len = @push_stack.count
+        len.times do
+            val = @push_stack.pop
+            @pop_stack.push(val)
+        end
+    end
 end
 
 # Take an array, and a window size w.
