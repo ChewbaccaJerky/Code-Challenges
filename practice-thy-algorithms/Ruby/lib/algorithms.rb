@@ -486,29 +486,56 @@ end
 # Tell me what number is missing?
 # How could you solve the problem in O(n), and also O(1) space?
 def sum_upon_sums(array)
-    # [1, 5, 3, 2, 0] => 4
-
-    # Step 0: initialize variables
+    # Step 0: initialize variables => O(1)
     max = -1
     sum = 0
-    
-    # Step 1: Get Max and Sum
+
+    # Step 1: Get Max and Sum => O(n)
     array.each do |num|
         max = num if num >= max
         sum += num
     end
 
-    # Step 2: Get summation
+    # Step 2: Get summation => O(1)
     summation = max * (max + 1) / 2
 
-    # Step 3: Missing value by subtracting summation and sum
+    # Step 3: Return Missing value by subtracting summation and sum => O(1)
     summation - sum
 end
 
 # Implement a stack with a max method that returns the maximum value.
 # It should run in O(1) time.
 class MaxStack
+    attr_reader :max
+    def initialize
+        @stack = []
+        @max = nil
+        @count = 0
+    end
 
+    def push(num)
+        @stack << num
+        @max = num if (@max && num > @max) || !@max
+        @count += 1
+    end
+
+    def pop
+        val = @stack[-1]
+        @stack = @stack.take(@count)
+        @count -= 1
+        set_new_max! if @count == 0
+        val
+    end
+
+    private
+
+    def set_new_max!
+        @max = @count == 0 ? nil : @stack.max
+    end
+
+    def here
+        print "here"
+    end
 end
 
 # Implement a queue using stacks.
