@@ -594,12 +594,15 @@ class MinMaxStack
         val = @stack[-1]
         @stack = @stack[0...-1]
         set_min_or_max!(val)
+        @length -= 1
+        clear_min_max if @length == 0
         val
     end
 
     private
 
-    def set_min_or_max(val)
+    def set_min_or_max!(val)
+        return if @min.nil? || @max.nil?
         # when pushed
         if @stack.include?(val)
             @min = val if val < @min || !min
@@ -609,14 +612,71 @@ class MinMaxStack
             @max = @stack.max if @max = val
         end
     end
+
+    def clear_min_max
+        @min = nil
+        @max = nil
+    end
 end
 
 class MinMaxStackQueue
+    attr_reader :min, :max, :length
+    def initialize
+        @push_stack = MinMaxStack.new
+        @pop_stack = MinMaxStack.new
+        @min = nil
+        @max = nil
+        @length = 0
+    end
 
+    def enqueue(value)
+        @push_stack.push(value)
+        @min = @push_stack.min
+        @max = @push_stack.max
+        
+        @length += 1
+    end
+
+    def dequeue
+        refill_pop_stack! if @pop_stack.length == 0
+        val = @pop_stack.pop
+        set_min_or_max if val == @min || val == @min
+        val
+    end
+
+    private
+
+    def refill_pop_stack!
+        len = @push_stack.length
+        len.times do
+            @pop_stack.push(@push_stack.pop())
+        end
+    end
+
+    def set_min_or_max(val)
+        if @min == val
+            min1 = @pop_stack.min
+            min2 = @push_stack.min
+            @min = min1 < min2 ? min1 : min2
+        end
+
+        if @max == val
+            max1 = @pop_stack.max
+            max2 = @push_stack.max
+            @max = max1 < max2 ? max1 : max2
+        end
+    end
 end
 
+# arry => [ 1, 3, 4, 5, 6, 7 ], w => 3
 def windowed_max_range(array, w)
+    queue = MinMaxStackQueue.new
+    max = 0
 
+    array.each do |num|
+        queue.enqueue(num)
+    end
+    queue.max
 end
 
 # Suppose a hash representing a directory.
@@ -634,14 +694,17 @@ end
 # Given these two arrays, find which element is missing in the second array.
 # Do this in linear time with constant memory use.
 def find_missing_number(array_one, array_two)
+    sum1 = array_one.reduce(:+)
+    sum2 = array_two.reduce(:+)
 
+    sum1 - sum2
 end
 
 # Create a function that takes three strings.
 # Return whether the third is an interleaving of the first two.
 # Interleaving means it contains the same characters and preserves their order.
 def is_shuffle?(string_one, string_two, string_three)
-
+    
 end
 
 # Write a function that takes an integer and returns it in binary form.
