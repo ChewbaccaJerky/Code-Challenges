@@ -1,4 +1,4 @@
-def max_area(height)
+def container_with_most_water(height)
     max_area = 0
     left = 0
     right = height.length - 1
