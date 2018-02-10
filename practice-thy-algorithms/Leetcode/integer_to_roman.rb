@@ -1,13 +1,13 @@
 # Given an integer, convert it to a roman numeral.
 # Input is guaranteed to be within the range from 1 to 3999.
-# 1     => 'I'
-# 10    => 'X'
-# 50    => 'L'
-# 100   => 'C'
-# 500   => 'D'
-# 1000  => 'M'
+
+M = ["", "M", "MM", "MMM"]
+C = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
+X = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
+I = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
 def int_to_roman(num)
 
+    M[num/1000] + C[(num%1000)/100] + X[(num%100) / 10] + I[num%10] 
 end
 
 describe "int_to_roman" do
