@@ -10,6 +10,7 @@ NUM3 = [
   "()(())",
   "()()()"
 ]
+
 require 'set'
 
 def generate_parenthesis(num)
