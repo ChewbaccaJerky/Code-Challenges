@@ -4,21 +4,53 @@ const myBind = function(ctx, ...bindArgs){
     };
 };
 
+function allSum(values) {
+    const numbers = [];
+    const args = arguments;
+    function _curriedSum(){
+        Array.from(args).forEach((n)=>{
+            numbers.push(n);
+        });
 
-// sum(1,3,4,5)(4)(3)(2,3,4)
-const currySum = function currySum(num) {
-    let len = arguments.length;
-    return function(x) {
-        let sum = 0;
-        while(len > 0) {
-            sum += num[len-1];
-            len -= 1;
+        if(args.length === 0) {
+            let total = 0;
+            numbers.forEach(n =>{
+                total += n;
+            });
+            return total;
         }
-        return sum + x;
-    };
-};
+        else {
+            return _curriedSum();
+        }
+    }
 
-const n = currySum(1,2,3,4)(1,2);
+    return _curriedSum();
+}
+
+function curriedSum(numArgs) {
+    console.log(numArgs);
+    const numbers = [];
+    
+    function _curriedSum(num) {
+        numbers.push(num);
+
+        if (numbers.length === numArgs) {
+            let total = 0;
+
+            numbers.forEach((n) => {
+                total += n;
+            });
+
+            return total;
+        } else {
+            return _curriedSum;
+        }
+    }
+
+    return _curriedSum;
+}
+
+const n = allSum(4,5,6)(10)(2)(3)(2);
 console.log(n);
 
 
