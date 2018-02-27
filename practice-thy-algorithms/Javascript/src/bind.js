@@ -27,30 +27,36 @@ function allSum(values) {
     return _curriedSum();
 }
 
-function curriedSum(numArgs) {
-    console.log(numArgs);
+function curriedSum() {
     const numbers = [];
-    
-    function _curriedSum(num) {
-        numbers.push(num);
 
-        if (numbers.length === numArgs) {
+    for(let i = 0; i < arguments.length; i++) {
+        numbers.push(arguments[i]);
+    }
+
+    function _curried() {
+        
+        if(arguments.length === 0) {
             let total = 0;
 
-            numbers.forEach((n) => {
-                total += n;
+            numbers.forEach((num) => {
+                total += num;
             });
 
             return total;
-        } else {
-            return _curriedSum;
+        }
+        else {
+            for(let i = 0; i < arguments.length; i++) {
+                numbers.push(arguments[i]);
+            }
+            return _curried;
         }
     }
 
-    return _curriedSum;
+    return _curried;
 }
 
-const n = allSum(4,5,6)(10)(2)(3)(2);
+const n = curriedSum(4,5,6)(1,2)(4,5,6)();
 console.log(n);
 
 
