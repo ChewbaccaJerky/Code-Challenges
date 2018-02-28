@@ -34,8 +34,9 @@ function wordWrap(str, limit) {
 
 let str1 = 'The truth is I am Ironman';
 let result1 = ['The', 'truth is', 'I am', 'Ironman'];
+
 let str2 = 'The truth is I am iron man';
 let result2 = ['The truth', 'is I am', 'iron man'];
 
 console.log(wordWrap( str1, 8) === result1);
-console.log(wordWrap( str2, 9) == result2);
+console.log(wordWrap( str2, 9) === result2);
