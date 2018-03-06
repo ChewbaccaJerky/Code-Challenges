@@ -69,7 +69,7 @@ def check_height( node )
     if height.abs > 1
         INT_MIN_VALUE # found error. pass up
     else
-        [check_height(node.left), check_height(node.right)].max + 1
+        [leftHeight, rightHeight].max + 1
     end
 end
 
