@@ -49,27 +49,11 @@ def three_sums(nums)
     result = []
 
     i = 0
-    until r <= l
-        search_val = (nums[l] + nums[r]) * -1
-
-        (result << [nums[l], nums[r], search_val]) if rest?(nums, l, r)
-        if i % 2
-            l += 1
-        else
-            r -= 1
-        end
-        i += 1
+    until r < l
+        sum = nums[r] + nums[l]
     end
 
     result.uniq
-end
-
-def rest?(nums, l, r)
-    val = (nums[l] + nums[r]) * -1
-    nums.each.with_index do |num, idx|
-        return true if val == num && idx != l && idx != r
-    end
-    false
 end
 
 arr = [-1, 0, -1, 1, 2]

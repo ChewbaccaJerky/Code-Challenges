@@ -44,3 +44,39 @@ def add_to_list(node, level, arrlist)
     arrList
 end
 
+# 4.4 CHECK BALANCED
+# Implement a funciton to check if a binary tree is balanced. 
+# For the purposes of this question, 
+# balanced tree is defined to be a tree such that the heights 
+# of the two subtress of any node never differ by more than one.
+
+INT_MIN_VALUE = -2147483648
+
+def check_balanced( node )
+    return check_height(node) != INT_MIN_VALUE
+end
+
+def check_height( node )
+    return -1 if node.nil?
+    
+    leftHeight = getHeight(node.left)
+    return INT_MIN_VALUE if leftHeight == INT_MIN_VALUE # pass up
+
+    rightHeight = getHeight(node.right)
+    return INT_MIN_VALUE if rightHeight == INT_MIN_VALUE # pass up
+
+    heightDiff = leftHeight - rightHeight
+    if height.abs > 1
+        INT_MIN_VALUE # found error. pass up
+    else
+        [check_height(node.left), check_height(node.right)].max + 1
+    end
+end
+
+def getHeight( node )
+    # base case
+    return -1 if node.nil?
+    [getHeight(node.left), getHeight(node.right)].max + 1
+end
+
+
