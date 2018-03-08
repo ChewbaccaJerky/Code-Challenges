@@ -80,3 +80,17 @@ def getHeight( node )
 end
 
 
+# 4.5 Validating BST
+# Implement a function to check if a binary tree is a binary tree is a binary search tree.
+
+def check_BST(node, range = [-2147483647, 2147483647])
+    MIN = 0
+    MAX = 1
+    return true if node.nil?
+    return false unless range[MIN] <= node.val || node.val < range[1]
+    return false unless 
+        check_BST(node.left, [range[MIN], node.val]) ||
+        check_BST(node.right, [node.val, range[MAX]])
+
+    true
+end
