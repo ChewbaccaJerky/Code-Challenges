@@ -54,7 +54,6 @@
 def generateBoard(row, col, num_mines)
 # Step 1 create board
   board = Array.new(row) { Array.new(col) {-1}}
-
 # Step 2 place random mines on board
   until num_mines < 1
     temp_x = rand(row)
@@ -71,11 +70,15 @@ def generateBoard(row, col, num_mines)
     board.each_index do |y|
       next if board[x][y] == "*"
       count = 0
-
-    # Step 3a Check within bounds and count mines
-      x = [x-1, x+1]
-      y = [y-1, y+1]
+    # Step 3a
+    # check within bounds and count mines
+      
+      min_x = x - 1
+      max_x = x + 1
+      min_y = y - 1
+      max_y = y + 1
        
+      
       (min_x..max_x).each do |x|
         (min_y..max_y).each do |y|
           if (x >= 0 && x < row) && (y >= 0 && y < col)
@@ -83,18 +86,25 @@ def generateBoard(row, col, num_mines)
           end
         end
       end
-
-      # Step 3b Add count to tile
+      
       board[x][y] = count
+      
+#       # [[x-1], [y-1..y+1]]  = top values
+#       count += board[x-1][y-1..y+1].count("*") if x-1 > 0 && x+1 < row
+#       # [[x, y-1], [x, y+1]] = middle values
+#       count += board[x][y-1..y+1].count("*") 
+#       # [[x+1], [y-1..y+1]]  = bottom
+#       count += board[x+1][y-1..y+1].count("*")
+#       board[x][y] = count.to_s
     end
   end
   
-  # Step 4 Return value
+  # Step 4
   board
 end
 
 # board = generateBoard(3, 3, 4)
-board = generateBoard(3, 3, 8)
+board = generateBoard(8, 8, 8)
 
 board.each do |row|
   print row
