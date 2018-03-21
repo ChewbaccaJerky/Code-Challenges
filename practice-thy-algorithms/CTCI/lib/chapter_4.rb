@@ -94,3 +94,53 @@ def check_BST(node, range = [-2147483647, 2147483647])
 
     true
 end
+
+# 4.6 Successor
+# Write an algorithm to the 'next' node(i.e in-order succession) of a given node in a binary search tree.
+# You may assume that each node has a link to its parent
+
+def successor(node)
+    # case 0: Does not have a right node
+    if node.right.nil?
+        # move up the parent nodes until parent is greater than node
+        cur_node = node
+        until node.parent.val > cur_node.val
+            node = node.parent
+        end
+        return node.parent
+    else
+    # case 1: Has a right node
+        # move to right node
+        node = right.node
+        # move to left node until left node is empty
+        until node.left.nil?
+            node = left.node
+        end
+        node
+    end
+end
+
+# 4.8 FIRST COMMON ANCESTOR
+# Design an algorithm and write code to find the first common ancestor
+# of two nodes in a binary tree. Avoid storing additional nodes in a data structure.
+# NOTE: This is not necessarily a binary search tree.
+# @params: Node node1, Node node2
+# @return: Node
+
+def common_ancestor(node1, node2)
+
+    until node1.parent.nil? && node2.parent.nil?
+        node1.visited = true unless node1.parent.nil?
+        node2.visited= true unless node2.parent.nil?
+
+        node1 = node1.parent
+        node2 = node2.parent
+
+        return node1 if node1.visited?
+        return node2 if node2.visited?
+    end
+
+    # return root node
+    node1
+end
+
