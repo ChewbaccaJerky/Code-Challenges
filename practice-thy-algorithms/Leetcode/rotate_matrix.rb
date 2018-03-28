@@ -31,24 +31,31 @@ def rotate_in_place(mat)
             # store current cell in temp variable
             temp = mat[x][y];
 
-            # move values from bottom-left to top-left
-            mat[x][y] = mat[max-1-y][x]
+            # move left to top
+            mat[x][y] = mat[y][x]
 
-            # move values from bottom-right to bottom-left
-            mat[max-1-y][x] = mat[max-1-x][max-1-y]
-
-            # move values from top-right to bottom-right
-            mat[max-1-x][max-1-y] = mat[x][max-1-y]
-
-            # move values from temp to top-right
-            mat[y][max-1-y] = temp
+            # move bottom to left
+            # mat[y][x] = mat[max-1-x][y]
+            
+            # move right to bottom
+            # mat[max-1-x][y] = mat[y][max-1-x]
+            
+            # move temp to right
+            # mat[y][max-1-x] = temp
 
             y += 1
         end
         x += 1
     end
 
+
     mat
+end
+
+def print(mat)
+    mat.each do |row|
+        
+    end
 end
 
 describe "rotate_in_place" do
