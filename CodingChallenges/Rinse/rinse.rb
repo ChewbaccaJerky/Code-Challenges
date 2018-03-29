@@ -70,15 +70,14 @@ def generateBoard(row, col, num_mines)
     board.each_index do |y|
       next if board[x][y] == "*"
       count = 0
-    # Step 3a
-    # check within bounds and count mines
       
+      # Step 3a
+      # check within bounds and count mines
       min_x = x - 1
       max_x = x + 1
       min_y = y - 1
       max_y = y + 1
        
-      
       (min_x..max_x).each do |x|
         (min_y..max_y).each do |y|
           if (x >= 0 && x < row) && (y >= 0 && y < col)
@@ -88,18 +87,10 @@ def generateBoard(row, col, num_mines)
       end
       
       board[x][y] = count
-      
-#       # [[x-1], [y-1..y+1]]  = top values
-#       count += board[x-1][y-1..y+1].count("*") if x-1 > 0 && x+1 < row
-#       # [[x, y-1], [x, y+1]] = middle values
-#       count += board[x][y-1..y+1].count("*") 
-#       # [[x+1], [y-1..y+1]]  = bottom
-#       count += board[x+1][y-1..y+1].count("*")
-#       board[x][y] = count.to_s
     end
   end
   
-  # Step 4
+  # return board
   board
 end
 
