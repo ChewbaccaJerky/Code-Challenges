@@ -144,3 +144,39 @@ def common_ancestor(node1, node2)
     node1
 end
 
+# 4.10 Check Subtree
+# T1 and T2 are two very large binary trees, with T1 much bigger than T2. 
+# Create an algorithm to determine if T2 is a subtree of T1.
+# A tree T2 is  subtree of T1 if there exists a node n in T1 such taht the subtree of n is identical to T2.
+# That is, if you cut off the tree at node n, the two trees would be identical
+
+def check_subtrees(node_T1, node_T2)
+    # Step 1 Find identical root
+    root = find_root(node_T1, node_T2)
+    return false if root.nil?
+    
+    # Step 2 Check of the rest of the tree is identical
+    identical?(root, node_T2)
+end
+
+def find_root(node_T1, node_T2)
+    return nil if node_T1.nil?
+    return node_T1 if node_T1 == node_T2
+
+    left = find_root(node_T1.left, node_T2)
+    right = find_root(node_T1.right, node_T2)
+
+    return left if left
+    return right if right
+end
+
+def identical?(node_T1, node_T2)
+    return true if node_T1.nil?
+    return false if node_T1 != node_T2
+    
+    left = identical?(node_T1.left, node_T2.left)
+    right = identical?(node_T1.right, node_T2.right)
+
+    left && right
+end
+
