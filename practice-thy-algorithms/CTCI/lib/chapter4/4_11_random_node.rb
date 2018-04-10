@@ -23,6 +23,18 @@ class Node
         "val: #{@val} left_count: #{@left_count} right_count: #{@right_count} left: #{@left} right: #{@right} parent: #{@parent}"
     end
 
+    def replace(node)
+        @val = node.val
+    end
+
+    def decrement(branch)
+        if branch == "left"
+            @left_count -= 1
+        elsif branch == "right"
+            @right_count -= 1
+        end
+    end
+    
     def detach
         @parent = nil
         @left = nil
@@ -188,30 +200,22 @@ class BinarySearchTree
 
     def remove_2_children(node)
         
-        smallest_right_node = node.right
-        
-        until smallest_right_node.left.nil?
-            smallest_right_node = smallest_right_node.left
+        right_smallest = node.right
+
+        until right_smallest.left.nil?
+            right_smallest = right_smallest.left
         end
-        
-        delete(smallest_right_node.val, false)
-        
-        # case 1 node == root
-        if @root == node
-            smallest_right_node.parent = nil
-            smallest_right_node.left = node.left
-            smallest_right_node.right = node.right
-            @root = smallest_right_node
-            node.detach
-        # case 2 node != root
-        else
-            
-        end
+
+        temp = right_smallest
+        until right_smallest == node
+            parent = temp.parent
+            parent_branch = parent.left == temp ? "left" : "right"
+
 
     end
 end
 
-values = [7, 5, 12, 11, 10, 4, 6, 13]
+values = [7, 5, 12, 11, 10, 9, 4, 6, 13]
 
 bs = BinarySearchTree.new
 
