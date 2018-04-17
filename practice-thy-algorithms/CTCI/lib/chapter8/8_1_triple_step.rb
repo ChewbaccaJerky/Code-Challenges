@@ -23,6 +23,7 @@ def triple_step(n)
     end
 
     MEMO[n] = count
+    count
 end
 
 puts triple_step(100)
