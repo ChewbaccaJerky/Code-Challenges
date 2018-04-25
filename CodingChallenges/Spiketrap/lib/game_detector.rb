@@ -2,86 +2,89 @@ require "byebug"
 
 def game_detector(tags, documents)
     return documents if tags.empty? || documents.empty?
-    
-    dict = create_dictionary(tags)
 
-    documents.each do |doc|
+    
+    documents.map do |doc|
+        matched = {}
+        # Step 1 Get matched values
+        tags.each do |key, arr|
+            regex = create_regex(arr)
+            if regex && regex.match(doc)
+                phrase = regex.match(doc)[0]
+                matched[key] = phrase
+            end
+        end
+
+
+        # Step 2 Get index ranges
+        keys = remove_overlapping_game_ids(matched, doc)
         
-        # Step 1 Get matched Tags
-        matched_tags = get_tags(dict, tags, doc)
-        # Step 2 Check if tags in array are within document
-        tag_info = {GameID: "", text: ""}
-        matched_tags.each do |key|
-            matched = tags[key].each do |tag|
-                if doc.include?(tag) && tag_info[:text].length < tag.length
-                    tag_info[:GameId] = key
-                    tag_info[:text] = tag
+        # Step 3 Mutate current document
+        keys.each do |game_id|
+            doc = create_tagname_doc(game_id, matched[game_id], doc)
+        end
+        
+        doc
+    end
+end
+
+=begin
+    @params Hash<game_id, Array<phrase>>, String doc
+    @return Array<Symbol>
+=end
+
+def remove_overlapping_game_ids(matched, doc)
+    ranges = {}
+
+    matched.each do |game_id, phrase|
+        start = doc.index(phrase)
+        ending = start + phrase.length - 1
+        if ranges.empty?
+            ranges[game_id] = [start, ending]
+        else
+            keys_to_delete = []
+            add_to_hash = true
+            ranges.each do |key, cur_range|
+                # case 1 when ranges are overlapping
+                if start < cur_range.first && ending > cur_range.first
+                    keys_to_delete << key
+                # case 2 when cur_range is inside of range, remove range
+                elsif start > cur_range.first && ending < cur_range.last
+                    add_to_hash = false
                 end
             end
-        end
-        
-        print tag_info
-
-        
-        # matched_tags.each do |tag|
-        #     puts tag.class
-        # end
-
-
-    end
-end
-
-# @params tags
-# @result Array<symbols>
-# @complexity time: O(n) space: O(n)
-def create_dictionary(tags)
-    result = {}
-
-    tags.keys.each do |key|
-        sym = key[0].to_sym
-        if result[sym].nil?
-            result[sym] = [key]
-        else
-            result[sym].push(key)
-        end
-    end
-
-    result
-end
-
-
-# @params dict: Sym<char> correlates with Array<GameID>
-#         tags: GameId => Array<Pharses>
-#         doc:  document string
-# @return Array<GameID>
-def get_tags(dict, tags, doc)
-    result = []
-    
-    doc.split(' ').each do |word|
-        key = word[0].upcase.to_sym
-        tag_arr = dict[key]
-        # debugger
-        if tag_arr
-            tag_arr.each do |tag|
-                result << tag if tag.to_s.include?(word)
+            # delete overlapping ranges
+            keys_to_delete.each do |key|
+                ranges.delete(key)
             end
+
+            # add to hash
+            ranges[game_id] = [start, ending] if add_to_hash
         end
     end
 
-    result
+    ranges.keys
 end
 
-def get_matching_tag(matched_tags, tags, doc)
-    result = {GameID: "", text: ""}
+=begin
+    @params Array<Symbol> tagnames
+    @return regex
+=end
+def create_regex(arr)
+    return nil if arr.empty?
 
-    matched_tags.each do |key|
-        tags[key].each do |tag|
-            if doc.include?(tag) && tag_info[:text].length < tag.length
-                tag_info[:GameId] = key
-                tag_info[:text] = tag
-            end
-        end
-    end
+    regex_str = arr.join('|')
+    Regexp.new(regex_str)
+end
 
-    result
+=begin
+    @params Symbol game_id, String phrase, String doc
+    @return String
+=end
+def create_tagname_doc(game_id, phrase, doc)
+    return doc if game_id == ""
+    new_str = "TAG{#{game_id.to_s},#{phrase}}"
+    regex = Regexp.new(phrase)
+
+    doc.gsub(regex, new_str)
 end

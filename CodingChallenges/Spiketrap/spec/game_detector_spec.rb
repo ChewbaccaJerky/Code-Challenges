@@ -8,13 +8,13 @@ describe "game_detector" do
         "Destiny2": ["Destiny 2", "the last Destiny game", "Destiny II"],
         "WorldOfWarcraft": ["WoW the game", "world of warcraft"],
     }
-    test_doc = ["I liked the last Destiny game, now I play Fortnite",
+    test_docs = ["I liked the last Destiny game, now I play Fortnite",
                 "Lol, no comment about that", "I'm still playing world of warcraft since ww2"]
     
     context "Empty Params" do
     
         it "accepts empty hash of tags" do
-            expect(game_detector({}, test_doc)).to eq(test_doc)
+            expect(game_detector({}, test_docs)).to eq(test_docs)
         end
 
         it "accepts empty array of documents" do
@@ -26,7 +26,24 @@ describe "game_detector" do
     context "Params not empty" do
         
         it "accepts single item hash and array " do
-            expect(game_detector({"Destiny": ["Destiny", "original Destiny game"]}, ["I liked the original Destiny game."])).to eq(["I liked the TAG{DESTINY, original Destiny game}."])
+            expect(game_detector(
+                {"Destiny": ["Destiny", "original Destiny game"]}, 
+                ["I liked the original Destiny game."]))
+                .to eq(["I liked the TAG{Destiny,original Destiny game}."])
+        end
+
+        it "accepts document with multiple GameIDs in a single document" do 
+            tags = {"Destiny2": ["last Destiny game", "Destiny 2"], "Fortnite": ["Fortnite", "Fort Nite"]}
+            docs = ["I liked the last Destiny game, now I play Fortnite"]
+            result = ["I liked the TAG{Destiny2,last Destiny game}, now I play TAG{Fortnite,Fortnite}"]
+            expect(game_detector(tags, docs)).to eq(result)
+        end
+
+        it "accepts large hash of game ids with similar game ids and large array" do
+            result = ["I liked TAG{Destiny2,the last Destiny game}, now I play TAG{Fortnite,Fortnite}",
+                      "Lol, no comment about that",
+                      "I'm still playing TAG{WorldOfWarcraft,world of warcraft} since ww2"]
+            expect(game_detector(test_tags, test_docs)).to eq(result)
         end
 
     end
