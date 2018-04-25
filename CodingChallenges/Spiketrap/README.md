@@ -40,8 +40,15 @@ for example:
 ## Note
 
 A recognized sequence of words, e.g. “Call of Duty world war two”, identified to refer to a certain
-game id, e.g. “CallOfDutyWW2”, must be represented in the final text as `TAG{GameID,original, text}`, e.g. `TAG{CallOfDutyWW2,Call of Duty world war two}`.
+game id, e.g. “CallOfDutyWW2”, must be represented in the final text as `TAG{GameID,original text}`, e.g. `TAG{CallOfDutyWW2,Call of Duty world war two}`.
 
 ## Extra points
 Comment on the running time of your implementation.
 Have fun!
+
+# Run
+1. `bundle install`
+2.  `bundle exec rspec <dirname>/Spiketrap`
+
+# Complexity
+

@@ -46,6 +46,11 @@ describe "game_detector" do
             expect(game_detector(test_tags, test_docs)).to eq(result)
         end
 
+        it "accepts large array without any matching tags" do
+            docs = ["Gaming world is great", "Going to get more things to do"]
+            expect(game_detector(test_tags, docs))
+                .to eq(docs)
+        end
     end
 end 
 

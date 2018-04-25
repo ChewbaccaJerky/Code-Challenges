@@ -1,12 +1,16 @@
 require "byebug"
 
+=begin
+    @params Hash<game_id, Array<String> tags, Array<String> documents
+    @documents Array<String>
+=end
 def game_detector(tags, documents)
     return documents if tags.empty? || documents.empty?
-
     
+    # O(documents)
     documents.map do |doc|
         matched = {}
-        # Step 1 Get matched values
+        # Step 1 Get matched values O(tags)
         tags.each do |key, arr|
             regex = create_regex(arr)
             if regex && regex.match(doc)
@@ -15,8 +19,8 @@ def game_detector(tags, documents)
             end
         end
 
-
-        # Step 2 Get index ranges
+        
+        # Step 2 Remove overlapping game id phrase keys
         keys = remove_overlapping_game_ids(matched, doc)
         
         # Step 3 Mutate current document
@@ -29,10 +33,13 @@ def game_detector(tags, documents)
 end
 
 =begin
+    Remove Overlapping Game Ids:
+        When ever a phrase location is overlapping another the inner phrase.
+        Inner phrase is removed.
     @params Hash<game_id, Array<phrase>>, String doc
     @return Array<Symbol>
+    @time complexity O(m*m)
 =end
-
 def remove_overlapping_game_ids(matched, doc)
     ranges = {}
 
@@ -67,8 +74,11 @@ def remove_overlapping_game_ids(matched, doc)
 end
 
 =begin
+    Create Regex
+        Create a regex of joined strings
     @params Array<Symbol> tagnames
     @return regex
+    @time complexity O(1)
 =end
 def create_regex(arr)
     return nil if arr.empty?
@@ -78,8 +88,11 @@ def create_regex(arr)
 end
 
 =begin
+    Create Tag Name Doc
+        Replace game_ids with Tag{GameID, original text}
     @params Symbol game_id, String phrase, String doc
     @return String
+    @time complexity O(1)
 =end
 def create_tagname_doc(game_id, phrase, doc)
     return doc if game_id == ""
