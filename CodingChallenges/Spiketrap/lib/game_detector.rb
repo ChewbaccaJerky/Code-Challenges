@@ -3,11 +3,11 @@ require "byebug"
 =begin
     @params Hash<game_id, Array<String> tags, Array<String> documents
     @documents Array<String>
+    @time complexity O(nm^2)
 =end
 def game_detector(tags, documents)
     return documents if tags.empty? || documents.empty?
     
-    # O(documents)
     documents.map do |doc|
         matched = {}
         # Step 1 Get matched values O(tags)
@@ -19,7 +19,6 @@ def game_detector(tags, documents)
             end
         end
 
-        
         # Step 2 Remove overlapping game id phrase keys
         keys = remove_overlapping_game_ids(matched, doc)
         

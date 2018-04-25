@@ -50,5 +50,8 @@ Have fun!
 1. `bundle install`
 2.  `bundle exec rspec <dirname>/Spiketrap`
 
-# Complexity
+## Complexity
+### Time O(nm^2)
+- `n => documents`
+- `m => matched keys`
 
