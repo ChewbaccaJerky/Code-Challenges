@@ -13,31 +13,18 @@ def scan_file(filename):
     result = OpswatService.hash_lookup(hash)
 
     # Step 3 if found go to Step 6
-    if result.json()[hash.upper()] != "Not Found":
-        return OpswatService.result_to_string(result, filename)
-    
-    # Step 4 if not found then upload and return data_id
+    # Not Found have only a single key which is their Hash Value e.g {<Hash Value>: "Not Found"}
+    if len(result.json().keys()) > 1:
+        OpswatService.print_result(result, filename)
+    # # Step 4 if not found then upload and return data_id
     else:
-        url = "https://api.metadefender.com/v2/file"
-        OpswatService.upload_file(path, hash)
-    # Step 5 print pull result with data_id
-
-    # Step 6 print result
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
+        data_id = OpswatService.upload_file(path, hash)
+        # Step 5 repeatedly pull result with data_id
+        result = OpswatService.get_results_by_data_id(data_id)
+        while len(result.json.keys) < 2:
+            result = OpswatService.get_results_by_data_id(data_id)
+        # Step 6 print result
+        OpswatService.print_result(result, filename)
 
 def main():
     if len(sys.argv) < 2:
@@ -48,9 +35,8 @@ def main():
         try:
             scan_file(filename)
         except Exception as e:
-            print e
-
-
+            print e.message + "and"
+            
 
 if __name__ == "__main__":
     main()
