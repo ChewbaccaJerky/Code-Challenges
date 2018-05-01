@@ -32,10 +32,15 @@ def main():
         return
     else:
         filename = sys.argv[1]
-        try:
-            scan_file(filename)
-        except Exception as e:
-            print e.message + "and"
+
+        # check if file exists
+        if os.path.exists(filename):
+            try:
+                scan_file(filename)
+            except Exception as e:
+                print e.message + "and"
+        else:
+            print "File does not exists"
             
 
 if __name__ == "__main__":
