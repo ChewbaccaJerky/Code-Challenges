@@ -21,8 +21,11 @@ def scan_file(filename):
         data_id = OpswatService.upload_file(path, hash)
         # Step 5 repeatedly pull result with data_id
         result = OpswatService.get_results_by_data_id(data_id)
-        while len(result.json.keys) < 2:
+
+        # While scan_details are empty then call get result by data id until scan details are ready
+        while len(result.json()["scan_results"]["scan_details"].keys()) == 0:
             result = OpswatService.get_results_by_data_id(data_id)
+
         # Step 6 print result
         OpswatService.print_result(result, filename)
 
