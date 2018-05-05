@@ -1,3 +1,4 @@
+
 ## Problem Description: 
 
 Generate a simple program to scan a file against our metadefender.opswat.com API. OPSWAT online help contains details of our publicly available API along with sample code that shows how to scan a file. However, it is costly to multi-scan a file so we would like you to implement a hash lookup prior to deciding to upload a file, either way you should retrieve results and display them. Please read through the documentation and sample code found at https://onlinehelp.opswat.com/mdcloud/2._Public_APIs.html to perform the following logic.
@@ -52,3 +53,9 @@ What we are looking to see.
 our own key when we test it out ourselves.
 4. A cleanly written and descriptive README that instructs us how to build and execute your project. We will
 be testing your project on a clean Ubuntu 16.04+ VM or Visual Studio 2017 Windows machine. You can use whatever language or 3rd party library you want, but it should build and execute out of the box on the VM, so test accordingly. 
+
+## Instructions to getting started
+1. Install Python 2.7.10
+    - ubuntu: `sudo add-apt-repository ppa:jonathonf/python-2.7`
+2. Clone or download REPO
+` git clone `
