@@ -30,7 +30,6 @@ function getMedian(tempArr) {
         const val1 = quickSelect(tempArr, idx1);
         const val2 = quickSelect(tempArr, idx2);
         const median = (val1 + val2) / 2;
-        console.log(`val1: ${val1} val2: ${val2} median: ${median}`);
         return median;
     }
 }
