@@ -9,7 +9,7 @@ return an empty string "".Challenge : Perform all these in O(1)time complexity.
  * Initialize your data structure here.
  */
 var AllOne = function () {
-    this.store = {}
+    this.store = {};
 };
 
 /**
