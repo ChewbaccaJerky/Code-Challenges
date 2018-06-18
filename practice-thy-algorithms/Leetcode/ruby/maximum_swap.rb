@@ -68,6 +68,17 @@ end
 
 describe "maximum_swap" do
     
+    it "should accept single length values" do
+        num = 7
+        expect(maximum_swap(num)).to eq(num)
+    end
+
+    it "should accept swap maximum value with current value" do
+        num = 2736
+        result = 7236
+        expect(maximum_swap(num)).to eq(resut)
+    end
+
     it "should accept 838768" do 
         expect(maximum_swap(838768)).eq to(888763)
     end
