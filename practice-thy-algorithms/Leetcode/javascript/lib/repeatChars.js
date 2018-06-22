@@ -41,5 +41,9 @@ describe('repeatChars', ()=>{
     it('should return repeats of only num repeats', ()=>{
         assert.equal(repeatChars('aabbc', 2), 'aabb');
     });
+
+    it('should return empty string', ()=>{
+        assert.equal(repeatChars('abc', 3), '');
+    });
 });
 
