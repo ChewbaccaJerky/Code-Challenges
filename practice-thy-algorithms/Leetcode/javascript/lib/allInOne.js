@@ -61,7 +61,7 @@ AllOne.prototype.getMaxKey = function () {
 AllOne.prototype.getMinKey = function () {
     let result = "";
     let curMin = 1000000000000000;
-    for (key in this.store) {
+    for (let key in this.store) {
         if (this.store[key] < curMin) {
             curMin = this.store[key];
             result = key;
